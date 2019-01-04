@@ -9,9 +9,10 @@ namespace WebApplication1.Controllers
     public class StudentController : Controller
     {
         // GET: Student
+        [ActionName("Default")]
         public string Index()
         {
-            return "This is Index action method of StudentController";
+            return "Index";
         }
     }
 }
