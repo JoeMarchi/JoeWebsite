@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <form action="/Account/Login" method="post">
+        
+        <p>
+            用戶名稱:
+            <input name="LoginName" type="text" value=""/>
+        </p>
+
+        <p>
+            用戶密碼:
+            <input name="Password" type="text" value=""/>
+        </p>
+
+        <p>
+            <input type="submit" value="送出"/>
+        </p>
+
+        <p>
+            參考格式: 帳號 admin/ 密碼 admin
+        </p>
+        @ViewData["ReturnMessage"]
+        
+    </form>
+</body>
+</html>
