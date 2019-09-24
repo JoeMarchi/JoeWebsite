@@ -17,5 +17,15 @@ namespace WebApplication1.Controllers
         {
             return View("index");
         }
+        
+    }
+    public class AuthorizePlusAttribute : AuthorizeAttribute
+    {
+        
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            OnAuthorization(filterContext);
+        }
+        
     }
 }
