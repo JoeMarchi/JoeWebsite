@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model WebApplication1.Models.Student
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,10 +21,25 @@
     <p><a href="/Article/List_Tabl">Test</a></p>
 
     <p>==== 程式語言測試 ======</p>
-    <form action="/Home/Test">
-        <p>Value:<input type="text" name="valuetx1" /></p>
+    @using (Html.BeginForm())
+    {
+        <p>StudentId:<input type="text" name="studentid" /></p>
+        <p>StudentName:<input type="text" name="studentname" /></p>
+        <p>Age:<input type="text" name="age" /></p>
         <p><input type="submit" value="送出"></p>
+    }
+    @using (Html.BeginForm("Test","Home"))
+    {
+        <p>Value:<input type="text" name="value1" /></p>
+        <p><input type="submit" value="送出"></p>
+    }
+    <div>
+        @*@Model.StudentName<br>
+        @Model.Age<br>
+        @Model.StudentId<br>*@
         @ViewData["Value"]
-    </form>
+    </div>
+
+
 </body>
 </html>

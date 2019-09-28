@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using WebApplication1.Models;
 using System.Web.Mvc;
 
 namespace WebApplication1.Controllers
@@ -10,9 +11,9 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult Index(Student student)
         {
-            return View();
+            return View(student);
         }
 
         public ActionResult About()
@@ -29,13 +30,12 @@ namespace WebApplication1.Controllers
 
             return View();
         }
-        public ActionResult Test(string valuetx1)
+        public ActionResult Test(string value1)
         {
-            var n=valuetx1;
+            var n = value1;
             var types = n.GetType();
-            ViewData["Value"] = n;
+            ViewData["Value"] = value1;
             return View("index");
-            
         }
     }
 }
