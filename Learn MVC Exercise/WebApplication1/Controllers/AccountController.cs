@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class AccountController : Controller
     {
         // GET: Account
-        public ActionResult Index()
+        public ActionResult Model_01()
         {
             return View();
         }
-        public ActionResult Login()
+        public ActionResult Login_01(FormCollection form)
         {
-            return View("index");
+            string strLoginName = form["LoginName"];
+            string strPassword = form["Password"];
+            if (Models.UserManager.Validate(strLoginName, strPassword))
+            {
+                Session["CurrentUser"] = Models.UserManager.GetUserInfo(strLoginName);
+                return RedirectToAction("FormResult");
+            }
+            ViewBag.MsgErr = "輸入錯誤";
+            return View("Model_01"); 
         }
-        
-    }
-    public class AuthorizePlusAttribute : AuthorizeAttribute
-    {
-        
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public ActionResult FormResult()
         {
-            OnAuthorization(filterContext);
+            return View();
         }
-        
-    }
+    }  
 }

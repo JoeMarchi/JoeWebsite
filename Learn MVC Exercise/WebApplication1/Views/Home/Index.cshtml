@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.Models.Student
-
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    //Layout = null;
 }
 
 <!DOCTYPE html>
@@ -9,17 +9,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>起始頁面</title>
 </head>
 <body>
-    <p>==== 用戶登入驗證操作 =====</p>
-
-    <p><a href="/Account/Index">UserLogin</a></p>
-
-    <p>==== 查詢資料操作 MSSQL=====</p>
-
-    <p><a href="/Article/List_Tabl">Test</a></p>
-
     <p>==== 程式語言測試 ======</p>
     @using (Html.BeginForm())
     {
@@ -28,16 +20,11 @@
         <p>Age:<input type="text" name="age" /></p>
         <p><input type="submit" value="送出"></p>
     }
-    @using (Html.BeginForm("Test","Home"))
-    {
-        <p>Value:<input type="text" name="value1" /></p>
-        <p><input type="submit" value="送出"></p>
-    }
+
     <div>
-        @*@Model.StudentName<br>
+        @Model.StudentName<br>
         @Model.Age<br>
-        @Model.StudentId<br>*@
-        @ViewData["Value"]
+        @Model.StudentId<br>
     </div>
 
 

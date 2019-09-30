@@ -1,0 +1,20 @@
+﻿@using WebApplication1.Models;
+@{
+    Layout = null;
+    UserInfo objUserInfo = Session["CurrentUser"] as UserInfo;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FormResult</title>
+</head>
+<body>
+    <div>
+        你好，歡迎你:@objUserInfo.UserName
+        你的登入名稱:@objUserInfo.UserID
+    </div>
+</body>
+</html>

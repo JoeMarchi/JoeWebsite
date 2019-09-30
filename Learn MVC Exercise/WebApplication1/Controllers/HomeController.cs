@@ -30,6 +30,10 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        public ActionResult Model_01()
+        {
+            return View();
+        }
         public ActionResult Test(string value1)
         {
             var n = value1;
