@@ -9,8 +9,9 @@ namespace WebApplication1.Controllers
     public class ArticleController : Controller
     {
         // GET: Article
-        public ActionResult Index()
+        public ActionResult List_Table_OrderByDescending_MSSQL()
         {
+            
             return View();
         }
     }

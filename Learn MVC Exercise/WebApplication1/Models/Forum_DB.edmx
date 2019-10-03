@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Forum_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article_Tb">
+          <Key>
+            <PropertyRef Name="NO_F" />
+          </Key>
+          <Property Name="NO_F" Type="int" Nullable="false" />
+          <Property Name="Title_F" Type="nvarchar" MaxLength="50" />
+          <Property Name="Content_F" Type="nvarchar(max)" />
+          <Property Name="JoinTime_F" Type="datetime" />
+          <Property Name="ViewCount_F" Type="int" />
+          <Property Name="AccountNO_F" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Forum_DBModelStoreContainer">
+          <EntitySet Name="Article_Tb" EntityType="Self.Article_Tb" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Forum_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article_Tb">
+          <Key>
+            <PropertyRef Name="NO_F" />
+          </Key>
+          <Property Name="NO_F" Type="Int32" Nullable="false" />
+          <Property Name="Title_F" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content_F" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JoinTime_F" Type="DateTime" Precision="3" />
+          <Property Name="ViewCount_F" Type="Int32" />
+          <Property Name="AccountNO_F" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Forum_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Article_Tb" EntityType="Self.Article_Tb" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Forum_DBModelStoreContainer" CdmEntityContainer="Forum_DBEntities">
+          <EntitySetMapping Name="Article_Tb">
+            <EntityTypeMapping TypeName="Forum_DBModel.Article_Tb">
+              <MappingFragment StoreEntitySet="Article_Tb">
+                <ScalarProperty Name="NO_F" ColumnName="NO_F" />
+                <ScalarProperty Name="Title_F" ColumnName="Title_F" />
+                <ScalarProperty Name="Content_F" ColumnName="Content_F" />
+                <ScalarProperty Name="JoinTime_F" ColumnName="JoinTime_F" />
+                <ScalarProperty Name="ViewCount_F" ColumnName="ViewCount_F" />
+                <ScalarProperty Name="AccountNO_F" ColumnName="AccountNO_F" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
