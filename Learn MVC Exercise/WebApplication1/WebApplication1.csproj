@@ -163,6 +163,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Article_Tb.cs">
       <DependentUpon>Forum_DB.tt</DependentUpon>
     </Compile>
@@ -254,6 +255,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Model_01.cshtml" />
     <Content Include="Views\Account\FormResult.cshtml" />
+    <Content Include="Views\Article\List_Table_OrderByDescending_MSSQL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

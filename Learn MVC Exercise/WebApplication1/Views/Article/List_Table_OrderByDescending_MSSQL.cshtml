@@ -1,0 +1,27 @@
+﻿@using WebApplication1.Models;
+
+@{
+    Layout = null;
+    IList<Article_Tb> art = (IList<Article_Tb>)Model;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List_Table_OrderByDescending_MSSQL</title>
+</head>
+<body>
+    <div> 
+        @foreach(var item in art)
+        {
+            <tr>
+                <td>
+                    @(item.NO_F)
+                </td>
+            </tr>
+        }
+    </div>
+</body>
+</html>
