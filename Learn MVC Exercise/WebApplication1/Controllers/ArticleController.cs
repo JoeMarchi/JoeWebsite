@@ -14,8 +14,14 @@ namespace WebApplication1.Controllers
         public ActionResult List_Table_OrderByDescending_MSSQL()
         {
             Article art = new Article();
-            
-            return View(art.List_Table_OrderByDescending_MSSQL());
+            var varArt = art.List_Table_OrderByDescending_MSSQL();
+            return View(varArt);
+        }
+        public ActionResult List_Table_Where_Contain_MSSQL()
+        {
+            Article art = new Article();
+            var varArt = art.List_Table_Where_Contain_MSSQL("X");
+            return View(varArt);
         }
     }
 }

@@ -14,5 +14,9 @@ namespace WebApplication1.Models
             return db.Article_Tb.OrderByDescending(p => p.NO_F).ToList();
             
         }
+        public List<Article_Tb> List_Table_Where_Contain_MSSQL(string content)
+        {
+            return db.Article_Tb.Where(p=>p.Title_F.Contains(content)).ToList();
+        }
     }
 }

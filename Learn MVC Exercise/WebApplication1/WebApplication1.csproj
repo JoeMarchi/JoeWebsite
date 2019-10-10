@@ -256,6 +256,7 @@
     <Content Include="Views\Home\Model_01.cshtml" />
     <Content Include="Views\Account\FormResult.cshtml" />
     <Content Include="Views\Article\List_Table_OrderByDescending_MSSQL.cshtml" />
+    <Content Include="Views\Article\List_Table_Where_Contain_MSSQL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

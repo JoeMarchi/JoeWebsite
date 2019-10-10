@@ -2,26 +2,57 @@
 
 @{
     Layout = null;
-    IList<Article_Tb> art = (IList<Article_Tb>)Model;
+    IList<Article_Tb> art = Model;
 }
 
 <!DOCTYPE html>
 
-<html>
+<html>  
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>List_Table_OrderByDescending_MSSQL</title>
 </head>
 <body>
-    <div> 
-        @foreach(var item in art)
+    <table>
+        <tr>
+            <th>
+                編號:
+            </th>
+            <th>
+                標題:
+            </th>
+            <th>
+                內容:
+            </th>
+            <th>
+                人次:
+            </th>
+            <th>
+                時間
+            </th>
+        </tr>
+
+
+        @foreach (var item in art)
         {
-            <tr>
-                <td>
-                    @(item.NO_F)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @(item.NO_F)
+            </td>
+            <td>
+                @(item.Title_F)
+            </td>
+            <td>
+                @(item.Content_F)
+            </td>
+            <td>
+                @(item.ViewCount_F)
+            </td>
+            <td>
+                @(item.JoinTime_F)
+            </td>
+        </tr>
         }
-    </div>
+    </table>
 </body>
 </html>
