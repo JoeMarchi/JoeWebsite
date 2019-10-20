@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
-    public class UserInfo
+    public class Model_01_UI
     {
         public string UserID { get; set; }
         public string Password { get; set; }

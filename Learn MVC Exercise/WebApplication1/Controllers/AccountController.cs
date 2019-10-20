@@ -18,9 +18,9 @@ namespace WebApplication1.Controllers
         {
             string strLoginName = form["LoginName"];
             string strPassword = form["Password"];
-            if (Models.UserManager.Validate(strLoginName, strPassword))
+            if (Models.Model_01_UM.Validate(strLoginName, strPassword))
             {
-                Session["CurrentUser"] = Models.UserManager.GetUserInfo(strLoginName);
+                Session["CurrentUser"] = Models.Model_01_UM.GetUserInfo(strLoginName);
                 return RedirectToAction("FormResult");
             }
             ViewBag.MsgErr = "輸入錯誤";

@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.ModelValidate_01_UI
+
+@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModelValidate_01</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>Field</legend>
+            <div>
+                用戶 ID:
+            </div>
+            <div>
+                @Html.TextBoxFor(m =>m.ID)
+                @Html.ValidationMessageFor(m=>m.ID)
+            </div>
+            <div>
+                姓名:
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.Name)
+                @Html.ValidationMessageFor(m=>m.Name)
+            </div>
+            <div>
+                性別:
+            </div>
+            <div>
+                @Html.TextBoxFor(m=>m.Sex)
+                @Html.ValidationMessageFor(m=>m.Sex)
+            </div>
+            <div>
+                年齡:
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.Age)
+                @Html.ValidationMessageFor(m => m.Age)
+            </div>
+            <p>
+                <input type="submit" value="提交" />
+            </p>
+        </fieldset>
+
+    }
+
+</body>
+</html>

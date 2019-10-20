@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
-    public class UserManager
+    public class Model_01_UM
     {
         public static bool Validate(string strUserID,string strPassword)
         {
@@ -14,9 +14,9 @@ namespace WebApplication1.Models
 
             
         }
-        public static UserInfo GetUserInfo(string strUserID)
+        public static Model_01_UI GetUserInfo(string strUserID)
         {
-            return new UserInfo()
+            return new Model_01_UI()
             {
                 UserID = "admin",
                 Password = "admin",

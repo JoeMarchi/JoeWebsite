@@ -41,5 +41,26 @@ namespace WebApplication1.Controllers
             ViewData["Value"] = value1;
             return View("index");
         }
+        public ActionResult ModelValidate_01()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ModelValidate_01(Models.ModelValidate_01_UI user)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View("ModelValidate_01", user);
+                }
+                return View("ModelValidate_01_Result", user);
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

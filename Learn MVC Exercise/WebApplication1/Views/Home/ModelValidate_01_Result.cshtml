@@ -1,0 +1,42 @@
+﻿@*@model WebApplication1.Models.ModelValidate_01_UI*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModelValidate_01_Result</title>
+</head>
+<body>
+    <fieldset>
+        <legend>用戶輸入資料表單</legend>
+        <div>
+            用戶 ID:
+        </div>
+        <div>
+            @Model.ID
+        </div>
+        <div>
+            姓名:
+        </div>
+        <div>
+            @Model.Name
+        </div>
+        <div>
+            性別:
+        </div>
+        <div>
+            @Model.Sex
+        </div>
+        <div>
+            年齡:
+        </div>
+        <div>
+            @Model.Age
+        </div>
+    </fieldset>
+</body>
+</html>

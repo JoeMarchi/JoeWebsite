@@ -51,6 +51,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -61,7 +62,6 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -182,9 +182,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forum_DB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelValidate_01_UI.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="Models\UserManager.cs" />
+    <Compile Include="Models\Model_01_UI.cs" />
+    <Compile Include="Models\Model_01_UM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +258,8 @@
     <Content Include="Views\Account\FormResult.cshtml" />
     <Content Include="Views\Article\List_Table_OrderByDescending_MSSQL.cshtml" />
     <Content Include="Views\Article\List_Table_Where_Contain_MSSQL.cshtml" />
+    <Content Include="Views\Home\ModelValidate_01.cshtml" />
+    <Content Include="Views\Home\ModelValidate_01_Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
