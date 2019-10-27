@@ -62,5 +62,11 @@ namespace WebApplication1.Controllers
                 return View();
             }
         }
+        public ActionResult ModelValidate_02()
+        {
+            
+            return View();
+        }
+        
     }
 }

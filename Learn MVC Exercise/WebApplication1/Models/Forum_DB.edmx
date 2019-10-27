@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Forum_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Forum_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Article_Tb">
           <Key>
             <PropertyRef Name="NO_F" />
@@ -16,11 +16,23 @@
           <Property Name="ViewCount_F" Type="int" />
           <Property Name="AccountNO_F" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Member_Tb">
+          <Key>
+            <PropertyRef Name="NO" />
+          </Key>
+          <Property Name="NO" Type="int" Nullable="false" />
+          <Property Name="Account" Type="varchar" MaxLength="16" />
+          <Property Name="Password" Type="varchar" MaxLength="16" />
+          <Property Name="Name" Type="nvarchar" MaxLength="8" />
+          <Property Name="Email" Type="varchar" MaxLength="32" />
+          <Property Name="AuthCode" Type="varchar" MaxLength="16" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="Forum_DBModelStoreContainer">
           <EntitySet Name="Article_Tb" EntityType="Self.Article_Tb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member_Tb" EntityType="Self.Member_Tb" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Forum_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -37,7 +49,20 @@
         </EntityType>
         <EntityContainer Name="Forum_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Article_Tb" EntityType="Self.Article_Tb" />
+          <EntitySet Name="Member_Tb" EntityType="Forum_DBModel.Member_Tb" />
         </EntityContainer>
+        <EntityType Name="Member_Tb">
+          <Key>
+            <PropertyRef Name="NO" />
+          </Key>
+          <Property Name="NO" Type="Int32" Nullable="false" />
+          <Property Name="Account" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="AuthCode" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +78,19 @@
                 <ScalarProperty Name="JoinTime_F" ColumnName="JoinTime_F" />
                 <ScalarProperty Name="ViewCount_F" ColumnName="ViewCount_F" />
                 <ScalarProperty Name="AccountNO_F" ColumnName="AccountNO_F" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Tb">
+            <EntityTypeMapping TypeName="Forum_DBModel.Member_Tb">
+              <MappingFragment StoreEntitySet="Member_Tb">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="AuthCode" ColumnName="AuthCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="NO" ColumnName="NO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

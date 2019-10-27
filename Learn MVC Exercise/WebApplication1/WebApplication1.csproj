@@ -182,7 +182,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forum_DB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Member_Tb.cs">
+      <DependentUpon>Forum_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModelValidate_01_UI.cs" />
+    <Compile Include="Models\ModelValidate_02_MD.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Model_01_UI.cs" />
     <Compile Include="Models\Model_01_UM.cs" />
@@ -260,6 +264,7 @@
     <Content Include="Views\Article\List_Table_Where_Contain_MSSQL.cshtml" />
     <Content Include="Views\Home\ModelValidate_01.cshtml" />
     <Content Include="Views\Home\ModelValidate_01_Result.cshtml" />
+    <Content Include="Views\Home\ModelValidate_02.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

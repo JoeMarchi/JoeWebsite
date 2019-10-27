@@ -26,5 +26,6 @@ namespace WebApplication1.Models
         }
     
         public virtual DbSet<Article_Tb> Article_Tb { get; set; }
+        public virtual DbSet<Member_Tb> Member_Tb { get; set; }
     }
 }

@@ -28,14 +28,14 @@
                 姓名:
             </div>
             <div>
-                @Html.TextBoxFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name,new Dictionary<string, object> { { "type", "file" } })
                 @Html.ValidationMessageFor(m=>m.Name)
             </div>
             <div>
                 性別:
             </div>
             <div>
-                @Html.TextBoxFor(m=>m.Sex)
+                @Html.TextBoxFor(m=>m.Sex )
                 @Html.ValidationMessageFor(m=>m.Sex)
             </div>
             <div>
