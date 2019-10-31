@@ -1,0 +1,27 @@
+﻿@model WebApplication1.Models.Member_Tb
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModelValidate_02_RE</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Field</legend>
+        @Html.DisplayNameFor(m=>m.NO)
+        @Model.NO<br />
+        @Html.DisplayNameFor(m => m.Name)
+        @Model.Name<br />
+        @Html.DisplayNameFor(m=>m.Email)
+        @Model.Email<br />
+        登入密碼:@Model.Password<br />
+        驗證碼:@Model.AuthCode<br />
+        管理員:@Model.IsAdmin<br />
+    </fieldset>
+</body>
+</html>

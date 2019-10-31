@@ -67,6 +67,30 @@ namespace WebApplication1.Controllers
             
             return View();
         }
-        
+        [HttpPost]
+        public ActionResult ModelValidate_02(Models.Member_Tb member)
+        {
+            Forum_DBEntities db = new Forum_DBEntities();
+            if (!ModelState.IsValid)
+            {
+                return View("ModelValidate_02", member);
+            }
+            Member_Tb member_Tb = new Member_Tb();
+            member_Tb.NO = member.NO;
+            member_Tb.Name = member.Name;
+            member_Tb.Account = "test";
+            member_Tb.Password = "123456";
+            member_Tb.Email = member.Email;
+            member_Tb.IsAdmin = false;
+            member_Tb.AuthCode = "123456789";
+
+            db.Member_Tb.Add(member_Tb);
+            db.SaveChanges();
+            return RedirectToAction("ModelValidate_02_RE",member_Tb);
+        }
+        public ActionResult ModelValidate_02_RE(Models.Member_Tb member_Tb)
+        {
+            return View(member_Tb);
+        }
     }
 }

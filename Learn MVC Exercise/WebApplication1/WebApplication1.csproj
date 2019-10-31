@@ -265,6 +265,7 @@
     <Content Include="Views\Home\ModelValidate_01.cshtml" />
     <Content Include="Views\Home\ModelValidate_01_Result.cshtml" />
     <Content Include="Views\Home\ModelValidate_02.cshtml" />
+    <Content Include="Views\Home\ModelValidate_02_RE.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

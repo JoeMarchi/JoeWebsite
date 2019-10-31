@@ -1,4 +1,4 @@
-﻿
+﻿@model WebApplication1.Models.Member_Tb
 @{
     Layout = null;
 }
@@ -13,9 +13,26 @@
 <body>
     @using(Html.BeginForm())
     {
-        <fieldset>
-            <legend>Form</legend>
-        </fieldset>
+    <fieldset>
+        <legend>Form</legend>
+        <div>
+            @Html.DisplayNameFor(m => m.NO)
+            @Html.TextBoxFor(m => m.NO)
+            @Html.ValidationMessageFor(m => m.NO)
+        </div>
+        <div>
+            @Html.DisplayNameFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div>
+            @Html.DisplayNameFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
+        </div><br />
+        <input type="submit" value="送出" />
+    </fieldset>
+        
     }
 </body>
 </html>

@@ -12,6 +12,9 @@ namespace WebApplication1.Models
     {
         public class Member_Tb_MD
         {
+            [DisplayName("用戶編號")]
+            [Required(ErrorMessage = "請輸入編號")]
+            public int NO { get; set; }
             [DisplayName("用戶姓名")]
             [Required(ErrorMessage ="請輸入姓名")]
             public string Name { get; set; }
