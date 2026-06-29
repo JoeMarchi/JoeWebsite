@@ -1,1 +1,1 @@
-Home Credit 信用違約風險 — Kaggle 機器學習專案評估
+Home Credit 信用風險評估 — AI 輔助授信

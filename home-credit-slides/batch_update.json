@@ -28,13 +28,13 @@
     {
       "insertText": {
         "objectId": "slide_0_title",
-        "text": "Home Credit 信用違約風險"
+        "text": "信用風險評估 — AI 輔助授信"
       }
     },
     {
       "insertText": {
         "objectId": "slide_0_sub",
-        "text": "Kaggle 信用評估競賽資料介紹、專案可行性、資料處理與演算法評估\n（資料來源：Home Credit 2024 特徵字典 + 訓練流程規格書）"
+        "text": "從來源資料到風險分數：資料為何能預測、如何前處理與訓練，\n以及授信人員的實務應用（AI 輔助、產生風險分數）"
       }
     },
     {
@@ -65,13 +65,13 @@
     {
       "insertText": {
         "objectId": "slide_1_title",
-        "text": "競賽與資料集介紹"
+        "text": "為什麼這些資料能預測違約風險"
       }
     },
     {
       "insertText": {
         "objectId": "slide_1_body",
-        "text": "目標：依申請人資料預測貸款是否違約（target：0=正常，1=違約），協助對信用紀錄不足的族群做風險評估。\n附件特徵字典共 465 個欄位，採 _<id><型別> 命名（如 amount_1115A、approvaldate_319D），屬於 2024「Credit Risk Model Stability」競賽。\n與規格書(spec.md)所述 2018 版差異：2018 以 SK_ID_CURR 為主鍵、多張 csv（bureau、previous_application…）；2024 以 case_id 為主鍵、parquet 多深度表，並新增『模型穩定度』要求。\n本簡報以 2024 實際資料為準，沿用規格書的 Pipeline 架構（兩版流程高度相通）。"
+        "text": "過往還款行為：逾期天數、準時繳款比例 —— 最直接反映償債意願與能力。\n負債與收入結構：授信金額/收入、月攤還/收入比 —— 衡量還款壓力是否過重。\n既有信貸狀況：在各機構的貸款筆數與未償餘額 —— 反映整體負債水位。\n申請與查詢頻率：短期內多次申請 —— 常是資金緊張的警訊。\n金流穩定度：收入與帳戶進出是否穩定 —— 代表財務健康程度。\n申請人輪廓：年齡、年資、帳戶類型等 —— 協助區隔不同風險族群。\n小結：這些『行為 + 結構』訊號彼此互補，足以在統計上區分高/低風險。"
       }
     },
     {
@@ -111,13 +111,13 @@
     {
       "insertText": {
         "objectId": "slide_2_title",
-        "text": "資料結構與檔案"
+        "text": "資料前處理與機器學習流程（總覽）"
       }
     },
     {
       "insertText": {
         "objectId": "slide_2_body",
-        "text": "主表 base：case_id、date_decision、WEEK_NUM、MONTH、target，定義每筆申請與時間軸。\n特徵表依 depth 分層：depth 0（單列／申請當下）、depth 1、depth 2（一對多歷史，需聚合）。\n主題涵蓋：聯徵紀錄、過往申請、稅務、存款／簽帳卡金流、分期還款、人口統計等。\n串接鍵：以 case_id 將各表 left join 回主表；depth 1/2 需先 groupby(case_id) 聚合為單列。\n格式為 parquet、資料量達數 GB，建議用 Polars / DuckDB 做高效聚合。"
+        "text": "探索分析(EDA)：先看資料分布、缺失與異常，並注意違約屬於少數族群（不平衡）。\n資料清理：修正異常值與日期格式、處理缺失值，讓資料一致可用。\n特徵工程：把多筆歷史紀錄彙整成每位申請人的『行為摘要與比率指標』，並挑出最有預測力的特徵。\n資料切分(Split)：分訓練/驗證，且依時間切分，確保模型對『未來新案件』仍然準確。\n模型訓練與評估：讓模型從歷史案件學習違約樣態，再用沒看過的資料檢驗可靠度與穩定度。\n產出：為每一筆申請輸出一個『風險分數』。"
       }
     },
     {
@@ -157,13 +157,13 @@
     {
       "insertText": {
         "objectId": "slide_3_title",
-        "text": "特徵字典概覽（465 欄位）"
+        "text": "模型產出：風險分數的意義"
       }
     },
     {
       "insertText": {
         "objectId": "slide_3_body",
-        "text": "命名後綴即資料型別線索，分布如下：\nL 其他/一般轉換 187；A 金額 102；M 遮罩類別 63；D 日期 57；P 逾期天數(DPD) 33；T 其他轉換 22。\n金額類(A)：授信額度、攤還金額、存款餘額、扣繳稅額等 → 適合做比率與統計聚合。\n日期類(D)：核准日、指派日等 → 轉為距今天數、區間長度等時間特徵。\n逾期類(P)：avgdpd、maxdpd 等 → 違約風險最直接訊號。\n類別類(M)：地址行政區、帳戶類型等 → 樹模型可原生處理或目標編碼。"
+        "text": "模型把眾多訊號濃縮成單一『風險分數』，便於快速判讀。\n分數對應違約機率，可切分為 低 / 中 / 高 三個風險等級。\n同時列出『主要風險因子』，讓判斷可解釋、可向客戶與主管說明。\n重視穩定度：分數須隨時間維持可靠，不因近期樣態變動而失準。"
       }
     },
     {
@@ -203,13 +203,13 @@
     {
       "insertText": {
         "objectId": "slide_4_title",
-        "text": "評估指標：Gini 穩定度"
+        "text": "實務應用：AI 輔助授信流程"
       }
     },
     {
       "insertText": {
         "objectId": "slide_4_body",
-        "text": "主指標為自訂的『gini stability』，不只看單一 AUC，而看跨時間(WEEK_NUM)的表現穩定度。\n每週計算 gini = 2×AUC − 1；對各週 gini 擬合線性迴歸取斜率 a。\n穩定度 = mean(gini) + 88.0×min(0, a) − 0.5×std(殘差)：效能隨時間下滑或波動都會被重罰。\n啟示：模型不能只追求驗證集高分，須具時間泛化力與穩健性（正則化、特徵穩定）。"
+        "text": "收件 → 帶入/輸入申請人資料 → AI 模型即時產生風險分數與等級。\n低風險：快速核准；中風險：人工複審並補件；高風險：加強審查或婉拒。\nAI 是『輔助』而非取代：最終決策由授信人員結合分數、因子與經驗判斷。\n效益：加速審件、統一風險判讀標準、降低人為遺漏、保留決策軌跡。"
       }
     },
     {
@@ -249,13 +249,13 @@
     {
       "insertText": {
         "objectId": "slide_5_title",
-        "text": "專案可行性評估"
+        "text": "網頁設計：授信風險評估輔助工具"
       }
     },
     {
       "insertText": {
         "objectId": "slide_5_body",
-        "text": "資料面：標籤明確、特徵豐富(數百~上千)、公開 baseline 與 notebook 成熟 → 高度可行。\n挑戰一 類別不平衡：違約僅約 3%，須用 AUC/Gini 為主、佐以 scale_pos_weight。\n挑戰二 資料規模：多表數 GB，記憶體與聚合是瓶頸 → Polars/DuckDB、分塊與型別優化。\n挑戰三 穩定度要求：須做時間感知驗證，避免過擬合近期資料。\n資源：單機(16~32GB RAM) + LightGBM 即可達競爭力；GPU 非必要。\n商業價值高：可解釋(SHAP) 的風險因子報告可直接支援授信決策。\n結論：技術與資源門檻可控，建議推進，以 LightGBM 為主力先建立穩定 baseline。"
+        "text": "輸入區：申請人關鍵欄位（年齡、年收入、授信金額、月攤還、年資、過往逾期、既有貸款數、外部信用分數…）。\n一鍵『AI 風險評估』，即時計算。\n輸出區：風險分數儀表、風險等級、預估違約機率、主要風險因子清單、建議處置。\n合規提示：分數為決策輔助，仍須人工複核並符合法遵要求。\n（實際互動畫面見隨附網頁 credit_risk_app/index.html）"
       }
     },
     {
@@ -295,294 +295,18 @@
     {
       "insertText": {
         "objectId": "slide_6_title",
-        "text": "資料處理流程總覽"
+        "text": "價值與結論"
       }
     },
     {
       "insertText": {
         "objectId": "slide_6_body",
-        "text": "1. 資料載入：parquet 讀取、以 case_id 對齊、型別優化。\n2. EDA：標籤不平衡、缺失率、異常碼、欄位 cardinality 與時間分布。\n3. 資料清理：異常值轉 NaN、日期正負號修正、類別缺失處理。\n4. 特徵工程：比率、時間、聚合（depth 1/2 的 mean/max/sum/std/last）。\n5. 特徵彙整：left join 回主表、移除高缺失/零變異/高共線特徵。\n6. 切分→7. 訓練→8. 評估→9. 調參→10. 推論→11. 提交檔。"
+        "text": "來源資料涵蓋行為與結構訊號 —— 具備足夠的違約預測力。\n標準化的前處理與訓練流程 —— 結果穩定、可重現、可解釋。\n落地為授信人員的網頁工具 —— 即時風險分數，授信決策更快也更一致。\nAI 定位為輔助決策，兼顧效率、風險控管與可解釋性。"
       }
     },
     {
       "createParagraphBullets": {
         "objectId": "slide_6_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_7",
-        "insertionIndex": 7,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_7_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_7_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_7_title",
-        "text": "資料清理與異常處理"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_7_body",
-        "text": "異常碼：將哨兵值（如就業天數的異常極大值）統一轉為 NaN，避免污染分布。\n日期欄(_D)：多為相對天數，統一符號並轉為正向『距今天數』。\n類別欄(_M)：缺失補 'Unknown' 或保留交由 LightGBM/CatBoost 原生處理。\n高缺失(>80%) 與零變異欄位移除；高度共線(|r|>0.95) 擇一保留。\n全程固定 random seed，確保可重現性。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_7_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_8",
-        "insertionIndex": 8,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_8_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_8_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_8_title",
-        "text": "特徵工程與多表彙整"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_8_body",
-        "text": "比率特徵：授信/收入、攤還/收入、負債/額度等風險敏感比值。\n時間特徵：年齡、年資、合約存續期間、最近一次逾期距今天數。\n歷史聚合（依 case_id groupby）：逾期天數的 mean/max/std、繳款準時率、未償餘額統計、申請/核准次數。\ndepth 2 → depth 1 → base 逐層聚合，控制特徵爆炸與記憶體。\n類別編碼：樹模型用 Label/原生處理；必要時用平滑後的目標編碼(避免洩漏)。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_8_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_9",
-        "insertionIndex": 9,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_9_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_9_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_9_title",
-        "text": "演算法選擇"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_9_body",
-        "text": "基準：Logistic Regression（標準化 + L2），建立可解釋下限。\n主力：LightGBM（梯度提升樹），原生支援缺失值與類別、訓練快、特徵多時表現佳。\n備援：XGBoost、CatBoost（類別特徵強）；可做模型集成。\n不平衡處理：scale_pos_weight 或 is_unbalance；以 AUC 早停。\n穩定度導向：較強正則化(reg_alpha/lambda)、限制樹深、特徵/樣本抽樣，換取跨時間穩健。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_9_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_10",
-        "insertionIndex": 10,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_10_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_10_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_10_title",
-        "text": "驗證策略與超參數調整"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_10_body",
-        "text": "驗證：依 WEEK_NUM 做時間感知切分 / StratifiedGroupKFold，模擬未來週次、貼近 stability 評分。\n另留 holdout（最後一段時間）做最終驗證。\n調參工具：Optuna（貝氏搜尋），目標為交叉驗證平均 gini/AUC。\nLightGBM 主要參數：num_leaves、max_depth、learning_rate、min_child_samples、feature_fraction、bagging_fraction、reg_alpha、reg_lambda。\n以 5-fold 平均分數與標準差評估穩定性。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_10_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_11",
-        "insertionIndex": 11,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_11_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_11_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_11_title",
-        "text": "預期成果與驗收標準"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_11_body",
-        "text": "Pipeline 可從原始檔一鍵執行至產出 submission（case_id, score）。\nLightGBM baseline 交叉驗證 AUC 目標 ≥ 0.78（規格書門檻）；持續優化 gini 穩定度。\n輸出特徵重要性 / SHAP 報告，提供業務可理解的風險因子。\n全流程可重現（固定 seed）、模型序列化保存，支援對測試集推論。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_11_body",
-        "textRange": {
-          "type": "ALL"
-        },
-        "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"
-      }
-    },
-    {
-      "createSlide": {
-        "objectId": "slide_12",
-        "insertionIndex": 12,
-        "slideLayoutReference": {
-          "predefinedLayout": "TITLE_AND_BODY"
-        },
-        "placeholderIdMappings": [
-          {
-            "layoutPlaceholder": {
-              "type": "TITLE",
-              "index": 0
-            },
-            "objectId": "slide_12_title"
-          },
-          {
-            "layoutPlaceholder": {
-              "type": "BODY",
-              "index": 0
-            },
-            "objectId": "slide_12_body"
-          }
-        ]
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_12_title",
-        "text": "風險、下一步與結論"
-      }
-    },
-    {
-      "insertText": {
-        "objectId": "slide_12_body",
-        "text": "風險：特徵洩漏(時間因果)、近期分布漂移、過擬合單一時段。\n下一步：先建 LightGBM baseline → 時間感知 CV → 加聚合特徵 → Optuna 調參 → 監控穩定度。\n工程：以 Polars/DuckDB 控管資料量；Pipeline 模組化（loader/cleaning/fe/train/predict）。\n結論：資料完備、技術成熟、資源可控，專案高度可行，建議以穩定度為核心目標推進。"
-      }
-    },
-    {
-      "createParagraphBullets": {
-        "objectId": "slide_12_body",
         "textRange": {
           "type": "ALL"
         },

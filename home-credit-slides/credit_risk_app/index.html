@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>授信風險評估輔助系統 — AI 風險分數</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#ffffff; --muted:#64748b; --line:#e2e8f0;
+    --brand:#1d4ed8; --brand2:#2563eb;
+    --low:#16a34a; --mid:#d97706; --high:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+       background:linear-gradient(180deg,#0f172a 0%,#1e293b 220px,#f1f5f9 220px,#f1f5f9 100%);
+       color:#0f172a;min-height:100vh}
+  header{color:#fff;padding:26px 20px 70px;max-width:1100px;margin:0 auto}
+  header h1{margin:0;font-size:22px;font-weight:700}
+  header p{margin:6px 0 0;color:#cbd5e1;font-size:13px}
+  .wrap{max-width:1100px;margin:-48px auto 40px;padding:0 20px;display:grid;
+        grid-template-columns:1fr 1fr;gap:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+        box-shadow:0 10px 30px rgba(15,23,42,.08);padding:20px}
+  .card h2{margin:0 0 14px;font-size:16px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+  label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;
+        font-size:14px;background:#fff}
+  input:focus,select:focus{outline:2px solid #bfdbfe;border-color:var(--brand2)}
+  .full{grid-column:1 / -1}
+  .btn{margin-top:16px;width:100%;padding:12px;border:0;border-radius:10px;cursor:pointer;
+       background:var(--brand);color:#fff;font-size:15px;font-weight:600}
+  .btn:hover{background:var(--brand2)}
+  .btn.secondary{background:#e2e8f0;color:#334155;margin-top:8px}
+  /* result */
+  .gauge{position:relative;width:240px;height:130px;margin:6px auto 0}
+  .score{position:absolute;bottom:0;width:100%;text-align:center}
+  .score .num{font-size:40px;font-weight:800;line-height:1}
+  .score .lab{font-size:12px;color:var(--muted)}
+  .tier{display:inline-block;padding:5px 14px;border-radius:999px;font-weight:700;font-size:14px;color:#fff}
+  .kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .kv span:first-child{color:var(--muted)}
+  .factors li{font-size:13px;margin:6px 0;display:flex;justify-content:space-between;gap:10px}
+  .bar{height:8px;border-radius:4px;background:#e2e8f0;flex:1;margin:auto 0;position:relative;overflow:hidden}
+  .bar>i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+  .reco{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.5}
+  .placeholder{color:var(--muted);font-size:14px;text-align:center;padding:40px 10px}
+  .note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6}
+  @media(max-width:820px){.wrap{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>授信風險評估輔助系統</h1>
+  <p>輸入申請人資料，AI 模型即時產生「風險分數」協助授信決策 · Demo / 決策輔助用途</p>
+</header>
+
+<div class="wrap">
+  <!-- 輸入 -->
+  <section class="card">
+    <h2>① 申請人資料</h2>
+    <form id="form" class="grid">
+      <div>
+        <label>年齡（歲）</label>
+        <input type="number" id="age" value="35" min="18" max="90">
+      </div>
+      <div>
+        <label>工作年資（年）</label>
+        <input type="number" id="emp" value="5" min="0" max="50" step="0.5">
+      </div>
+      <div>
+        <label>年收入（元）</label>
+        <input type="number" id="income" value="600000" min="0" step="10000">
+      </div>
+      <div>
+        <label>申請授信金額（元）</label>
+        <input type="number" id="credit" value="900000" min="0" step="10000">
+      </div>
+      <div>
+        <label>每月攤還金額（元）</label>
+        <input type="number" id="annuity" value="22000" min="0" step="500">
+      </div>
+      <div>
+        <label>既有貸款筆數</label>
+        <input type="number" id="loans" value="1" min="0" max="30">
+      </div>
+      <div>
+        <label>過往最大逾期天數</label>
+        <input type="number" id="dpd" value="0" min="0" max="365">
+      </div>
+      <div>
+        <label>近 30 天申請次數</label>
+        <input type="number" id="inq" value="1" min="0" max="20">
+      </div>
+      <div class="full">
+        <label>外部信用分數（0–100，越高越好）</label>
+        <input type="number" id="ext" value="70" min="0" max="100">
+      </div>
+      <button type="submit" class="btn full">AI 風險評估</button>
+      <button type="button" id="reset" class="btn secondary full">清除重填</button>
+    </form>
+    <p class="note">
+      ※ 本頁面之風險分數由「示範用評分函式」即時計算，做為已訓練 AI 模型上線後的整合介面雛形；
+      實際部署時由後端載入訓練好的模型回傳分數。分數僅供決策輔助，最終核貸仍須人工複核並符合法遵規範。
+    </p>
+  </section>
+
+  <!-- 結果 -->
+  <section class="card">
+    <h2>② AI 風險評估結果</h2>
+    <div id="empty" class="placeholder">填寫左側資料後，點擊「AI 風險評估」<br>即可產生風險分數與建議。</div>
+
+    <div id="result" style="display:none">
+      <div class="gauge">
+        <svg viewBox="0 0 240 130" width="240" height="130">
+          <path d="M20 120 A100 100 0 0 1 220 120" fill="none" stroke="#e2e8f0" stroke-width="18" stroke-linecap="round"/>
+          <path id="arc" d="" fill="none" stroke="#16a34a" stroke-width="18" stroke-linecap="round"/>
+        </svg>
+        <div class="score">
+          <div class="num" id="scoreNum">0</div>
+          <div class="lab">風險分數（0–100，越高越危險）</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin:8px 0 14px">
+        <span class="tier" id="tier">—</span>
+      </div>
+
+      <div class="kv"><span>預估違約機率</span><b id="prob">—</b></div>
+      <div class="kv"><span>負債所得比 (DTI)</span><b id="dti">—</b></div>
+      <div class="kv"><span>授信／收入倍數</span><b id="cir">—</b></div>
+
+      <h2 style="margin:18px 0 8px;font-size:14px">主要風險因子</h2>
+      <ul class="factors" id="factors" style="list-style:none;padding:0;margin:0"></ul>
+
+      <div class="reco" id="reco"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+// ---- 示範評分函式：以邏輯式加權合成風險分數（代表已訓練模型的回傳值）----
+function assess(v){
+  const income = Math.max(v.income, 1);
+  const dti = (v.annuity * 12) / income;          // 負債所得比
+  const cir = v.credit / income;                  // 授信/收入倍數
+
+  // 各風險因子的加權貢獻（權重為示範值；正值=提高風險）
+  const terms = [
+    {key:'過往逾期紀錄', w: Math.min(v.dpd/30, 6) * 0.55},
+    {key:'負債所得比偏高', w: Math.max(dti - 0.35, 0) * 3.2},
+    {key:'授信金額相對收入偏高', w: Math.max(cir - 1.5, 0) * 0.9},
+    {key:'近期申請頻繁', w: Math.max(v.inq - 2, 0) * 0.35},
+    {key:'既有貸款筆數多', w: Math.max(v.loans - 2, 0) * 0.30},
+    {key:'外部信用分數偏低', w: Math.max(60 - v.ext, 0) * 0.045},
+    {key:'工作年資較短', w: Math.max(3 - v.emp, 0) * 0.30},
+    {key:'年齡偏年輕', w: Math.max(28 - v.age, 0) * 0.10},
+  ];
+  const z = -2.2 + terms.reduce((s,t)=>s+t.w, 0);
+  const prob = 1 / (1 + Math.exp(-z));            // 違約機率
+  const score = Math.round(Math.min(prob*100*1.25, 99)); // 風險分數 0–100
+
+  const factors = terms.filter(t=>t.w>0.05).sort((a,b)=>b.w-a.w).slice(0,4);
+  const maxw = factors.length ? factors[0].w : 1;
+  return {prob, score, dti, cir, factors, maxw};
+}
+
+function tierOf(score){
+  if(score < 30) return {name:'低風險', color:getCSS('--low')};
+  if(score < 60) return {name:'中風險', color:getCSS('--mid')};
+  return {name:'高風險', color:getCSS('--high')};
+}
+function getCSS(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+// 半圓儀表弧線
+function setArc(score, color){
+  const a = Math.PI * (1 - score/100);            // 角度（左=100% 起算）
+  const x = 120 + 100*Math.cos(a);
+  const y = 120 - 100*Math.sin(a);
+  const large = 0; const sweep = 1;
+  $('arc').setAttribute('d', `M20 120 A100 100 0 ${large} ${sweep} ${x} ${y}`);
+  $('arc').setAttribute('stroke', color);
+}
+
+function render(r){
+  const t = tierOf(r.score);
+  $('empty').style.display='none';
+  $('result').style.display='block';
+  $('scoreNum').textContent = r.score;
+  $('scoreNum').style.color = t.color;
+  setArc(r.score, t.color);
+  const tierEl = $('tier'); tierEl.textContent = t.name; tierEl.style.background = t.color;
+  $('prob').textContent = (r.prob*100).toFixed(1) + '%';
+  $('dti').textContent = (r.dti*100).toFixed(0) + '%';
+  $('cir').textContent = r.cir.toFixed(2) + ' 倍';
+
+  $('factors').innerHTML = r.factors.length
+    ? r.factors.map(f=>{
+        const pct = Math.round(f.w / r.maxw * 100);
+        return `<li><span>${f.key}</span>
+          <span class="bar"><i style="width:${pct}%;background:${tierOf(r.score).color}"></i></span></li>`;
+      }).join('')
+    : '<li><span style="color:var(--muted)">未偵測到明顯風險因子</span></li>';
+
+  const recos = {
+    '低風險':['#dcfce7','#166534','建議：可進入快速核准流程，依既有額度政策核給，留存評估紀錄即可。'],
+    '中風險':['#fef3c7','#92400e','建議：轉人工複審，要求補充收入/在職證明，視情況調整額度或利率。'],
+    '高風險':['#fee2e2','#991b1b','建議：加強審查或婉拒；如續辦，需擔保品或保證人並提報主管核可。'],
+  };
+  const [bg,fg,txt] = recos[t.name];
+  const reco = $('reco');
+  reco.style.background = bg; reco.style.color = fg;
+  reco.innerHTML = `<b>處置建議（${t.name}）</b><br>${txt}`;
+}
+
+$('form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const v = {
+    age:+$('age').value, emp:+$('emp').value, income:+$('income').value,
+    credit:+$('credit').value, annuity:+$('annuity').value, loans:+$('loans').value,
+    dpd:+$('dpd').value, inq:+$('inq').value, ext:+$('ext').value,
+  };
+  render(assess(v));
+});
+$('reset').addEventListener('click', ()=>{
+  $('result').style.display='none'; $('empty').style.display='block';
+});
+</script>
+</body>
+</html>
