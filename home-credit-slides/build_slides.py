@@ -21,13 +21,24 @@ SLIDES = [
     {
         "layout": "TITLE",
         "title": "信用風險評估 — AI 輔助授信",
-        "body": "資料來源：Kaggle —「Home Credit Default Risk」競賽\n從來源資料到風險分數：資料為何能預測、如何前處理與訓練，以及授信人員的實務應用",
+        "body": "競賽：Kaggle —「Home Credit - Credit Risk Model Stability」(2024 年版)\n從來源資料到風險分數：資料為何能預測、如何前處理與訓練，以及授信人員的實務應用",
+    },
+    {
+        "layout": "TITLE_AND_BODY",
+        "title": "競賽版本差異：2024 版 vs 2018 版",
+        "body": [
+            "本專案採用版本：2024「Home Credit - Credit Risk Model Stability」；2018 舊版為「Home Credit Default Risk」。",
+            "來源資料：2024 採多檔分層（主表 base + 各 depth 特徵表）、主鍵 case_id、並含時間欄 WEEK_NUM；2018 以 SK_ID_CURR 為主鍵、bureau / previous_application 等多張 csv。",
+            "欄位：2024 欄位以『_型別』後綴匿名命名（_A 金額、_D 日期、_M 類別、_P 逾期…），共數百欄；2018 為具語意名稱（如 AMT_INCOME_TOTAL）。",
+            "模型目標（可靠度）：2024 強調『穩定度/可靠度』——不只看單次 AUC，更要求預測表現隨時間（各週）維持穩定，採自訂 gini 穩定度指標，效能下滑會被懲罰；2018 僅以 AUC-ROC 評分。",
+            "意涵：2024 版更貼近實務——模型上線後須長期穩定可靠，而非只在歷史測試集上分數高。",
+        ],
     },
     {
         "layout": "TITLE_AND_BODY",
         "title": "為什麼這些資料能預測違約風險",
         "body": [
-            "資料來源：Kaggle「Home Credit Default Risk」競賽——以真實貸款申請人的歷史紀錄，搭配是否違約的結果(TARGET)為標籤，供模型學習。",
+            "資料來源：Kaggle「Home Credit - Credit Risk Model Stability」(2024 年版)——以真實貸款申請人的歷史紀錄，搭配是否違約的結果(target)為標籤，供模型學習。",
             "過往還款行為：逾期天數、準時繳款比例 —— 最直接反映償債意願與能力。",
             "負債與收入結構：授信金額/收入、月攤還/收入比 —— 衡量還款壓力是否過重。",
             "既有信貸狀況：在各機構的貸款筆數與未償餘額 —— 反映整體負債水位。",

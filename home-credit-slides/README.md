@@ -1,6 +1,6 @@
 # Home Credit 信用風險評估 — 簡報 + 授信 AI 輔助網頁
 
-資料來源：**Kaggle —「Home Credit Default Risk」競賽**。依附件 `spec.md` 與 `Home_Credit_2024…xlsx`（465 欄特徵字典）製作的成果，包含：
+資料來源：**Kaggle —「Home Credit - Credit Risk Model Stability」競賽（2024 年版）**（前身為 2018「Home Credit Default Risk」）。依附件 `spec.md` 與 `Home_Credit_2024…xlsx`（465 欄特徵字典）製作的成果，包含：
 1. **業務導向簡報**（7 張）：資料為何能預測違約、前處理與機器學習流程、模型產出的風險分數、以及授信實務應用。
 2. **授信風險評估輔助網頁**：授信人員輸入申請人資料 → AI 模型即時產生「風險分數」與處置建議。
 
